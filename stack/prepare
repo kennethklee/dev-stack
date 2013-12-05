@@ -4,6 +4,7 @@ source $(dirname $0)/helpers.sh
 LOG=/tmp/log/$(basename $0).log
 mkdir -p /tmp/log
 
+DOMAIN=$1
 USER=vagrant
 
 (
@@ -32,7 +33,7 @@ USER=vagrant
 
 ) 2>&1 | tee $LOG
 
-echo "Once you run a web server on port 80, you can access it on 8080."
-echo "For example: http://cbc.me:8080"
+echo "Once you run a web server on port 80, you can access it on 9000."
+echo "For example: http://$DOMAIN:9000"
 echo
 echo "Ready to go!"

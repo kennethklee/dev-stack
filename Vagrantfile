@@ -3,13 +3,13 @@
 
 BOX_NAME = ENV["BOX_NAME"] || "raring"
 BOX_URI = ENV["BOX_URI"] || "https://cloud-images.ubuntu.com/vagrant/raring/current/raring-server-cloudimg-amd64-vagrant-disk1.box"
-CBC_DOMAIN = ENV["CBC_DOMAIN"] || "cbc.me"
-CBC_IP = ENV["CBC_IP"] || "10.0.0.333"
+CBC_DOMAIN = ENV["CBC_DOMAIN"] || "localtest.me"
+CBC_IP = ENV["CBC_IP"] || "10.0.0.3"
 
 Vagrant::configure("2") do |config|
   config.vm.box = BOX_NAME
   config.vm.box_url = BOX_URI
-  config.vm.network :forwarded_port, guest: 80, host: 8080
+  config.vm.network :forwarded_port, guest: 80, host: 9000
   config.vm.hostname = "#{CBC_DOMAIN}"
   config.vm.network :private_network, ip: CBC_IP
 
@@ -20,6 +20,6 @@ Vagrant::configure("2") do |config|
     vb.customize ["modifyvm", :id, "--ostype", "Ubuntu_64"]
   end
 
-  config.vm.provision :shell, :inline => "/vagrant/stack/prepare"
+  config.vm.provision :shell, :inline => "/vagrant/stack/prepare #{CBC_DOMAIN}"
 
 end
