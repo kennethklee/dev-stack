@@ -1,0 +1,6 @@
+language-pack-en
+build-essential
+git-core
+subversion
+vim
+nginx
