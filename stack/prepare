@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+source $(dirname $0)/helpers.sh
+LOG=/tmp/log/$(basename $0).log
+mkdir -p /tmp/log
+
+USER=vagrant
+
+(
+    display Starting build at $(date)
+
+    display Install yum packages
+    (
+        xargs apt-get install -y < $(dirname $0)/packages.txt
+    ) 2>&1 | indent
+
+    display Update Kernel
+    (
+        apt-get install -y --no-upgrade linux-image-generic-lts-raring
+        apt-get install -y linux-headers-lts-raring dmks
+    ) 2>&1 | indent
+
+    display Install Docker
+    (
+        wget -q -O - https://get.docker.io/gpg | apt-key add -
+        echo 'deb http://get.docker.io/ubuntu docker main' > /etc/apt/sources.list.d/docker.list
+        apt-get update -q
+
+        apt-get install -y lxc-docker
+
+        usermod -a -G docker "$USER"
+    ) 2>&1 | indent
+
+    
+    yum clean all
+
+) 2>&1 | tee $LOG
