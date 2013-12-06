@@ -21,5 +21,7 @@ Vagrant::configure("2") do |config|
   end
 
   config.vm.provision :shell, :inline => "/vagrant/stack/prepare #{CBC_DOMAIN}"
-
+  
+  # Mount a folder from your guest machine
+  #config.vm.synced_folder "../.", "/home/vagrant/projects"
 end
