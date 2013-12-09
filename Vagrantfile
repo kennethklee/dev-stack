@@ -18,6 +18,8 @@ Vagrant::configure("2") do |config|
     # Ubuntu's Raring 64-bit cloud image is set to a 32-bit Ubuntu OS type by
     # default in Virtualbox and thus will not boot. Manually override that.
     vb.customize ["modifyvm", :id, "--ostype", "Ubuntu_64"]
+    vb.customize ["modifyvm", :id, "--memory", 2048]
+    vb.customize ["modifyvm", :id, "--cpus", 2]
   end
 
   config.vm.provision :shell, :inline => "/vagrant/stack/prepare #{CBC_DOMAIN}"
