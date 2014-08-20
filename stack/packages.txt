@@ -1,4 +1,5 @@
 language-pack-en
+apt-transport-https
 build-essential
 git-core
 subversion

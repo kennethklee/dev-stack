@@ -15,25 +15,13 @@ USER=vagrant
         xargs apt-get install -y < $(dirname $0)/packages.txt
     ) 2>&1 | indent
 
-    display Install AUFS
-    (
-        lsmod | grep aufs || modprobe aufs || apt-get install -y linux-image-extra-`uname -r`
-    ) 2>&1 | indent
-
     display Install Docker
     (
-        wget -q -O - https://get.docker.io/gpg | apt-key add -
-        echo 'deb http://get.docker.io/ubuntu docker main' > /etc/apt/sources.list.d/docker.list
-        apt-get update -q
-
-        apt-get install -y lxc-docker
-
+        curl -sSL https://get.docker.io/ubuntu/ | sh
         usermod -a -G docker "$USER"
     ) 2>&1 | indent 
 
 ) 2>&1 | tee $LOG
 
-echo "Once you run a web server on port 80, you can access it on 9000."
-echo "For example: http://$DOMAIN:9000"
-echo
-echo "Ready to go!"
+
+display "Ready to go!"
