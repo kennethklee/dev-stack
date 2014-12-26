@@ -7,7 +7,6 @@ BOX_URI = ENV["BOX_URI"] || "https://cloud-images.ubuntu.com/vagrant/trusty/curr
 Vagrant::configure("2") do |config|
   config.vm.box = BOX_NAME
   config.vm.box_url = BOX_URI
-  config.vm.network :forwarded_port, guest: 80, host: 9000
   config.vm.network :private_network, ip: "10.0.0.3"
 
   config.vm.provider :virtualbox do |vb|
@@ -22,5 +21,5 @@ Vagrant::configure("2") do |config|
   config.vm.provision :shell, :inline => "/vagrant/stack/prepare" 
   
   # Mount a folder from your guest machine
-  config.vm.synced_folder "../.", "/home/vagrant/projects"
+  # config.vm.synced_folder "../.", "/home/vagrant/projects"
 end
