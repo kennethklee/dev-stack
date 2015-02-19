@@ -15,11 +15,15 @@ USER=vagrant
         xargs apt-get install -y < $(dirname $0)/packages.txt
     ) 2>&1 | indent
 
-    display Install Docker
+    display Install Java Oracle 7
     (
-        curl -sSL https://get.docker.io/ubuntu/ | sh
-        usermod -a -G docker "$USER"
-    ) 2>&1 | indent 
+        echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
+        add-apt-repository -y ppa:webupd8team/java && \
+        apt-get update && \
+        apt-get install -y oracle-java7-installer && \
+        rm -rf /var/lib/apt/lists/* && \
+        rm -rf /var/cache/oracle-jdk7-installer
+    ) 2>&1 | indent
 
 ) 2>&1 | tee $LOG
 
